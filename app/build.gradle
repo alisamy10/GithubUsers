@@ -1,0 +1,94 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id "androidx.navigation.safeargs.kotlin"
+}
+
+
+android {
+    compileSdkVersion Android.compileSDK
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId Android.applicationId
+        minSdkVersion Android.minSDK
+        targetSdkVersion Android.targetSDK
+        versionCode Android.versionCode
+        versionName Android.versionName
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com\"")
+        }
+        release {
+            minifyEnabled false
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com\"")
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+    implementation Libs.kotlinStdLib
+    implementation Libs.coreExt
+    implementation Libs.appCompat
+    implementation Libs.material
+    implementation Libs.constraintLayout
+    implementation Libs.fragmentKtx
+
+
+    implementation Libs.hiltAndroid
+    kapt Libs.hiltAndroidCompiler
+    implementation Libs.retrofit
+    implementation Libs.retrofitCoroutinesAdapter
+    implementation Libs.gson
+    implementation Libs.gsonConverter
+    implementation Libs.loggingInterceptor
+
+    implementation Libs.roomRunTime
+    kapt Libs.kaptRoom
+    implementation Libs.roomKtx
+    implementation Libs.navigationKtx
+    implementation Libs.navigationUi
+
+
+    implementation Libs.timeFormater
+    implementation Libs.materialFavouriteButton
+
+    implementation Libs.glide
+    kapt Libs.kaptGlide
+
+    implementation Libs.circleImage
+    implementation Libs.swipeRefresh
+    implementation Libs.timber
+
+
+
+
+
+    testImplementation TestLibs.archCoreTesting
+    testImplementation TestLibs.mockWebServer
+    testImplementation TestLibs.junit
+    androidTestImplementation TestLibs.junit
+    androidTestImplementation TestLibs.rules
+    androidTestImplementation TestLibs.espresso
+    androidTestImplementation TestLibs.espressoContrib
+
+}
+
