@@ -1,7 +1,12 @@
 package com.example.githubusers.data.model
 
+import androidx.annotation.NonNull
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 class UsersResponse : ArrayList<UsersResponseItem>()
 
+@Entity
 data class UsersResponseItem(
     val avatar_url: String,
     val events_url: String,
@@ -10,6 +15,8 @@ data class UsersResponseItem(
     val gists_url: String,
     val gravatar_id: String,
     val html_url: String,
+    @PrimaryKey
+    @NonNull
     val id: Int,
     val login: String,
     val node_id: String,
