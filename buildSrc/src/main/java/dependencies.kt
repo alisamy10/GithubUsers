@@ -8,7 +8,7 @@ object Versions {
     val CIRCLE_IMAGE = "3.1.0"
     val KOTLIN = "1.5.31"
     val COMPILE_SDK = 28
-    val MIN_SDK_VERSION = 16
+    val MIN_SDK_VERSION = 17
     val TARGET_SDK_VERSION = 28
     val VERSION_CODE = 1
     val VERSION_NAME = "1.0"
