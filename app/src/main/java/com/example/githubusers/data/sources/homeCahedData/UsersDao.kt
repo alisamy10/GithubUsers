@@ -16,7 +16,7 @@ interface UsersDao {
 
 
     @Query("SELECT * FROM  UsersResponseItem")
-    fun getAllUsers(): List<UsersResponseItem>
+    suspend fun getAllUsers(): List<UsersResponseItem>
 
 
 }

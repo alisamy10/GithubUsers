@@ -30,7 +30,7 @@ class UsersRepositoryImpl @Inject constructor(
     private suspend fun getRemoteData(): List<UsersResponseItem> = onlineDataSource.getUsers()
 
     private suspend fun cacheArticles(data: List<UsersResponseItem>) = offlineDataSource.cacheUsers(data)
-    private fun getCachedData(): List<UsersResponseItem> = offlineDataSource.getLocalUsers()
+    private suspend fun getCachedData(): List<UsersResponseItem> = offlineDataSource.getLocalUsers()
 
 }
 
