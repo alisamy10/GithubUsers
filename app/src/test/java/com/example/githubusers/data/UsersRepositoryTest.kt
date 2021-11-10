@@ -7,12 +7,13 @@ import com.example.githubusers.data.sources.remoteApi.OnlineDataSource
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.core.Is
 import org.junit.Assert.assertThat
+import org.junit.Before
 import org.junit.Test
 
 
 class UsersRepositoryTest {
 
-val fakeList= mutableListOf<UsersResponseItem>().apply {
+   private val fakeList= mutableListOf<UsersResponseItem>().apply {
         add(UsersResponseItem(
           login="Ali",
             id=1
@@ -25,6 +26,16 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
 
     }
 
+    private val exepected= listOf(
+        UsersResponseItem(
+            login="Ali",
+            id=1
+        ),
+        UsersResponseItem(
+            login="ahmed",
+            id=2
+        )
+    )
 
 
 
@@ -32,7 +43,7 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
     fun getUsers_andInsertit_inRoom(){
 
         runBlocking {
-            val offlineDataSource = object : OfflineDataSource {
+           val  offlineDataSource = object : OfflineDataSource {
                 override fun getLocalUsers(): List<UsersResponseItem> {
                     return fakeList
                 }
@@ -41,16 +52,6 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
                 ,offlineDataSource)
 
             val result = usersRepository.getUsers()
-            val exepected = listOf(
-                UsersResponseItem(
-                    login="Ali",
-                    id=1
-                ),
-                UsersResponseItem(
-                    login="ahmed",
-                    id=2
-                )
-            )
             assertThat(result, Is.`is`(exepected))
         }
     }
@@ -60,7 +61,7 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
     fun getUsers_withOnlineNetwork_thenReturnListOfSourcesFromOfflineDataSource() {
         // run blocking to call suspend function or Coroutines scope
         runBlocking {
-            val offlineDataSource = object : OfflineDataSource {
+            val  offlineDataSource = object : OfflineDataSource {
                 override fun getLocalUsers(): List<UsersResponseItem> {
                     return fakeList
                 }
@@ -69,16 +70,6 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
                 object : NetworkAwareHandler {},offlineDataSource)
 
             val result = usersRepository.getUsers()
-            val exepected = listOf(
-                UsersResponseItem(
-                    login="Ali",
-                    id=1
-                ),
-                UsersResponseItem(
-                    login="ahmed",
-                    id=2
-                )
-            )
             assertThat(result, Is.`is`(exepected))
         }
 
@@ -86,13 +77,14 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
 
 
     @Test
-    fun getUsers_withOfflineNetwork_thenReturnListOfSourcesFromOfflineDataSource() {
+    fun getUsers_withOfflineNetwork_thenReturnListOfUsersFromOfflineDataSource() {
         runBlocking {
-            val offlineDataSource = object : OfflineDataSource {
-                override fun getLocalUsers(): List<UsersResponseItem> =fakeList
 
+            val  offlineDataSource = object : OfflineDataSource {
+                override fun getLocalUsers(): List<UsersResponseItem> {
+                    return fakeList
+                }
             }
-
             val networkAwareHandler =object : NetworkAwareHandler {
                 override fun isOnline(): Boolean = false
             }
@@ -103,23 +95,14 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
 
 
             val result = usersRepository.getUsers()
-            val exepected = listOf(
-                UsersResponseItem(
-                    login="Ali",
-                    id=1
-                ),
-                UsersResponseItem(
-                    login="ahmed",
-                    id=2
-                )
-            )
+
             assertThat(result, Is.`is`(exepected))
         }
 
     }
 
     @Test
-    fun getUsers_withOnlineNetwork_verifyGetSourcesFromNetworkCalled() {
+    fun getUsers_withOnlineNetwork_verifyGetUsersFromNetworkCalled() {
         runBlocking {
             var isGetSourcesInvoked = false
 
@@ -143,7 +126,7 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
     }
 
     @Test
-    fun getUsers_withOnlineNetwork_verifyCacheArticlesCalled() {
+    fun getUsers_withOnlineNetwork_verifyCacheUsersCalled() {
         runBlocking {
             var isCachedInvoked = false
 
@@ -170,7 +153,7 @@ val fakeList= mutableListOf<UsersResponseItem>().apply {
     }
 
     @Test
-    fun getUsers_withOfflineNetwork_verifyGetSourcesFromOfflineDataSourceIsCalled() {
+    fun getUsers_withOfflineNetwork_verifyGetUsersFromOfflineDataSourceIsCalled() {
         runBlocking {
             var isGetSourcesInvoked = false
 
