@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.navArgs
 import com.example.githubusers.databinding.FragmentUserWebViewBinding
+import com.example.githubusers.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +22,7 @@ class UserWebViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentUserWebViewBinding.inflate(inflater,container,false)
+        (requireActivity() as MainActivity).title =args.userName
 
         return binding.root
     }

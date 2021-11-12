@@ -7,7 +7,6 @@
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.example.githubusers.ui.features.usersList.UsersFragment"
-        android:label="fragment_users"
         tools:layout="@layout/fragment_users" >
         <action
             android:id="@+id/action_usersFragment_to_userWebViewFragment"
@@ -20,7 +19,6 @@
     <fragment
         android:id="@+id/userWebViewFragment"
         android:name="com.example.githubusers.ui.features.userWebView.UserWebViewFragment"
-        android:label="fragment_user_web_view"
         tools:layout="@layout/fragment_user_web_view">
         <argument
             android:name="webViewUrl"
