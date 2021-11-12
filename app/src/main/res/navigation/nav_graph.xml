@@ -8,5 +8,27 @@
         android:id="@+id/usersFragment"
         android:name="com.example.githubusers.ui.features.usersList.UsersFragment"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_userWebViewFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:destination="@id/userWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userWebViewFragment"
+        android:name="com.example.githubusers.ui.features.UserWebViewFragment"
+        android:label="fragment_user_web_view"
+        tools:layout="@layout/fragment_user_web_view">
+        <argument
+            android:name="webViewUrl"
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
+
+
 </navigation>

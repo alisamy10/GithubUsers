@@ -34,7 +34,7 @@ class UsersViewModel  @Inject constructor (private val userUseCase: UsersUseCase
         }
     }
 
-     fun getUsersLiveData()  = usersLiveData  as LiveData<Resource<List<UsersResponseItem>>>
+     fun getUsersLiveData()  = usersLiveData  as LiveData<Resource<UsersResponseItem>>
 
 
 

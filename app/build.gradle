@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id "androidx.navigation.safeargs.kotlin"
@@ -42,6 +41,10 @@ android {
         jvmTarget = '1.8'
     }
 
+    viewBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -54,6 +57,7 @@ dependencies {
 
 
     implementation Libs.hiltAndroid
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt Libs.hiltAndroidCompiler
     implementation Libs.retrofit
     implementation Libs.retrofitCoroutinesAdapter
