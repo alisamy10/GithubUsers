@@ -78,8 +78,9 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
     private fun setupRecyclerView() {
         binding.swipeRefresh.apply {
             setOnRefreshListener {
-                observeToUsersLiveData()
                 viewModel.getUsers()
+                observeToUsersLiveData()
+
             }
         }
         binding.newsRecycler.apply {
