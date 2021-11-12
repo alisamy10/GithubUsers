@@ -16,6 +16,7 @@ import com.example.githubusers.common.gone
 import com.example.githubusers.common.show
 import com.example.githubusers.data.model.UsersResponseItem
 import com.example.githubusers.databinding.FragmentUsersBinding
+import com.example.githubusers.domain.searchQuery
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -120,7 +121,7 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
         return true
     }
     override fun onQueryTextChange(newText: String?): Boolean {
-      //  homeAdapter.differ.submitList(searchQuery(newText, responseList))
+        userAdapter.differ.submitList(searchQuery(newText, responseList))
         return true
     }
 
