@@ -18,5 +18,6 @@ interface UsersDao {
     @Query("SELECT * FROM  UsersResponseItem")
     suspend fun getAllUsers(): List<UsersResponseItem>
 
-
+    @Query("UPDATE UsersResponseItem SET isFav = :isFv  WHERE login = :login")
+    suspend fun updateFav(isFv: Boolean, login: String)
 }

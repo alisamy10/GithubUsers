@@ -6,8 +6,6 @@ import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-class UsersResponse : ArrayList<UsersResponseItem>()
-
 @Entity
 data class UsersResponseItem(
     val avatar_url: String="",
@@ -29,7 +27,9 @@ data class UsersResponseItem(
     val starred_url: String="",
     val subscriptions_url: String="",
     val type: String="",
-    val url: String=""
+    val url: String="",
+    var isFav:Boolean=false,
+
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -49,16 +49,35 @@ data class UsersResponseItem(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readByte() != 0.toByte()
     ) {
     }
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(avatar_url)
+        parcel.writeString(events_url)
+        parcel.writeString(followers_url)
+        parcel.writeString(following_url)
+        parcel.writeString(gists_url)
+        parcel.writeString(gravatar_id)
+        parcel.writeString(html_url)
+        parcel.writeInt(id)
+        parcel.writeString(login)
+        parcel.writeString(node_id)
+        parcel.writeString(organizations_url)
+        parcel.writeString(received_events_url)
+        parcel.writeString(repos_url)
+        parcel.writeByte(if (site_admin) 1 else 0)
+        parcel.writeString(starred_url)
+        parcel.writeString(subscriptions_url)
+        parcel.writeString(type)
+        parcel.writeString(url)
+        parcel.writeByte(if (isFav) 1 else 0)
     }
 
-    override fun writeToParcel(p0: Parcel?, p1: Int) {
-        TODO("Not yet implemented")
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<UsersResponseItem> {

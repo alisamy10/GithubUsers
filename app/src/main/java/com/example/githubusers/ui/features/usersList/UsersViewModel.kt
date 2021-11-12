@@ -37,6 +37,11 @@ class UsersViewModel  @Inject constructor (private val userUseCase: UsersUseCase
      fun getUsersLiveData()  = usersLiveData  as LiveData<Resource<UsersResponseItem>>
 
 
+    fun updateFavorite(isFv:Boolean,login:String){
+        viewModelScope.launch(Dispatchers.IO){
+            userUseCase.updateFavoriteUseCase(isFv,login)
+        }
+    }
 
 
 

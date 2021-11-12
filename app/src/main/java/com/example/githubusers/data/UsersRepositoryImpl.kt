@@ -1,6 +1,7 @@
 package com.example.githubusers.data
 
 
+import android.util.Log
 import com.example.githubusers.common.NetworkAwareHandler
 import com.example.githubusers.data.model.UsersResponseItem
 import com.example.githubusers.data.sources.homeCahedData.OfflineDataSource
@@ -31,6 +32,9 @@ class UsersRepositoryImpl @Inject constructor(
 
     private suspend fun cacheArticles(data: List<UsersResponseItem>) = offlineDataSource.cacheUsers(data)
     private suspend fun getCachedData(): List<UsersResponseItem> = offlineDataSource.getLocalUsers()
+
+    override suspend fun updateFavorite(isFv: Boolean, login: String) = offlineDataSource.updateFav(isFv, login)
+
 
 }
 

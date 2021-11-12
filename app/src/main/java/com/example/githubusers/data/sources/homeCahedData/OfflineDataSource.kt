@@ -8,6 +8,9 @@ interface OfflineDataSource {
 
     suspend fun cacheUsers(data: List<UsersResponseItem>) {}
 
+    suspend fun updateFav(isFv: Boolean, login: String) {}
+
+
 }
 
 
@@ -18,6 +21,10 @@ class OfflineDataSourceImpl @Inject constructor(private val usersDao: UsersDao) 
 
     override suspend fun cacheUsers(data: List<UsersResponseItem>) {
         usersDao.insertUsers(data)
+    }
+
+    override suspend fun updateFav(isFv: Boolean, login: String) {
+        usersDao.updateFav(isFv, login)
     }
 
 }

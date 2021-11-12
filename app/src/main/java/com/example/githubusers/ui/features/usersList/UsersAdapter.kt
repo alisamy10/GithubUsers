@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import com.example.githubusers.R
 import com.example.githubusers.common.loadImage
 import com.example.githubusers.data.model.UsersResponseItem
 import com.example.githubusers.databinding.ItemUserBinding
@@ -57,12 +58,33 @@ class UsersAdapter(private val interaction: Interaction? = null) :
             binding.userImage.loadImage(item.avatar_url)
             binding.userName.text=item.login
 
+            if (item.isFav)
+                binding.addToFav.setImageResource(R.drawable.ic_is_favourite)
+            else
+                binding.addToFav.setImageResource(R.drawable.ic_favorite)
+
+
+            binding.addToFav.setOnClickListener {
+
+                interaction?.onFavSelected(adapterPosition, item)
+
+
+                if (item.isFav)
+                    binding.addToFav.setImageResource(R.drawable.ic_is_favourite)
+                else
+                    binding.addToFav.setImageResource(R.drawable.ic_favorite)
+
+            }
+
 
         }
     }
 
     interface Interaction {
         fun onItemSelected(position: Int, item: UsersResponseItem)
+
+        fun onFavSelected(position: Int, item: UsersResponseItem)
+
     }
 }
 

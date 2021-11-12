@@ -1,14 +1,12 @@
 package com.example.githubusers.ui.features.usersList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.githubusers.R
 import com.example.githubusers.common.Resource
@@ -17,8 +15,11 @@ import com.example.githubusers.common.show
 import com.example.githubusers.data.model.UsersResponseItem
 import com.example.githubusers.databinding.FragmentUsersBinding
 import com.example.githubusers.domain.searchQuery
+import com.example.githubusers.ui.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -28,7 +29,6 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
     private lateinit var  binding  :FragmentUsersBinding
     private val viewModel: UsersViewModel by viewModels()
     private val userAdapter by lazy { UsersAdapter(this) }
-    private lateinit var navController: NavController
     private lateinit var responseList: MutableList<UsersResponseItem>
 
 
@@ -37,21 +37,23 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       binding=FragmentUsersBinding.inflate(inflater,container,false)
+        setHasOptionsMenu(true)
+
+        binding=FragmentUsersBinding.inflate(inflater,container,false)
+        (requireActivity() as MainActivity).title = "Home"
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-        setHasOptionsMenu(true)
+       // navController = Navigation.findNavController(view)
+
         viewModel.getUsers()
         responseList = mutableListOf()
-
         setupRecyclerView()
         observeToUsersLiveData()
-       observeToErrorLiveData(view)
+        observeToErrorLiveData(view)
     }
 
 
@@ -86,7 +88,6 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
     }
     private fun observeToUsersLiveData() {
         viewModel.getUsersLiveData().observe(viewLifecycleOwner, Observer {
-            Log.e("ali", "state${it.data}");
             when (it) {
                 is Resource.Error -> {
                     binding.ProgressBar.gone()
@@ -108,6 +109,15 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
         findNavController().navigate(action)
     }
 
+    override fun onFavSelected(position: Int, item: UsersResponseItem) {
+
+        item.isFav = !item.isFav
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.updateFavorite(item.isFav, item.login)
+        }
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
@@ -116,6 +126,8 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
         searchView.setOnQueryTextListener(this)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         onQueryTextChange(query)
         return true
