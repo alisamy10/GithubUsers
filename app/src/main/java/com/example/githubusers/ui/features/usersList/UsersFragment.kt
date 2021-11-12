@@ -1,6 +1,5 @@
 package com.example.githubusers.ui.features.usersList
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,7 +16,6 @@ import com.example.githubusers.common.gone
 import com.example.githubusers.common.show
 import com.example.githubusers.data.model.UsersResponseItem
 import com.example.githubusers.databinding.FragmentUsersBinding
-import com.example.githubusers.ui.UsersAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

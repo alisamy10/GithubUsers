@@ -1,4 +1,4 @@
-package com.example.githubusers.ui.features
+package com.example.githubusers.ui.features.userWebView
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

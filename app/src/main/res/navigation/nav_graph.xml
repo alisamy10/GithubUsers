@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/userWebViewFragment"
-        android:name="com.example.githubusers.ui.features.UserWebViewFragment"
+        android:name="com.example.githubusers.ui.features.userWebView.UserWebViewFragment"
         android:label="fragment_user_web_view"
         tools:layout="@layout/fragment_user_web_view">
         <argument
