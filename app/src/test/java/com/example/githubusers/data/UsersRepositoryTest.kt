@@ -44,7 +44,7 @@ class UsersRepositoryTest {
 
         runBlocking {
            val  offlineDataSource = object : OfflineDataSource {
-                override fun getLocalUsers(): List<UsersResponseItem> {
+                override suspend fun getLocalUsers(): List<UsersResponseItem> {
                     return fakeList
                 }
             }
@@ -62,7 +62,7 @@ class UsersRepositoryTest {
         // run blocking to call suspend function or Coroutines scope
         runBlocking {
             val  offlineDataSource = object : OfflineDataSource {
-                override fun getLocalUsers(): List<UsersResponseItem> {
+                override suspend fun getLocalUsers(): List<UsersResponseItem> {
                     return fakeList
                 }
             }
@@ -81,7 +81,7 @@ class UsersRepositoryTest {
         runBlocking {
 
             val  offlineDataSource = object : OfflineDataSource {
-                override fun getLocalUsers(): List<UsersResponseItem> {
+                override suspend fun getLocalUsers(): List<UsersResponseItem> {
                     return fakeList
                 }
             }
