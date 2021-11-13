@@ -78,6 +78,7 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
     private fun setupRecyclerView() {
         binding.swipeRefresh.apply {
             setOnRefreshListener {
+                responseList.clear()
                 viewModel.getUsers()
                 observeToUsersLiveData()
 
@@ -96,6 +97,7 @@ class UsersFragment : Fragment(), UsersAdapter.Interaction ,SearchView.OnQueryTe
                 is Resource.Loading -> binding.ProgressBar.show()
                 is Resource.Success -> {
                     if (it.data != null) {
+                        responseList.clear()
                         binding.ProgressBar.gone()
                         binding.swipeRefresh.isRefreshing = false
                         userAdapter.differ.submitList(it.data)
